@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Date Tools</title>
+</head>
+<body>
+  <h1>It works 🎉</h1>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Date & Time Calculator</title>
+  <meta name="description" content="Simple date and time calculator utilities." />
+</head>
+<body>
+  <h1>Date & Time Calculator</h1>
+  <ul>
+    <li><a href="/age-calculator/">Age Calculator</a></li>
+  </ul>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Age Calculator</title>
+  <meta name="description" content="Calculate your exact age in years, months, and days." />
+  <link rel="canonical" href="/age-calculator/" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="/assets/css/style.css" />
+</head>
+<body>
+  <h1>Age Calculator</h1>
+
+  <label>Date of Birth</label><br>
+  <input type="date" id="dob" /><br><br>
+
+  <button onclick="calculateAge()">Calculate</button>
+  <button onclick="resetForm()">Reset</button>
+
+  <div id="result"></div>
+
+  <script src="/assets/js/age.js"></script>
+</body>
+</html>
+function calculateAge() {
+  const dobInput = document.getElementById("dob").value;
+  const result = document.getElementById("result");
+
+  if (!dobInput) {
+    result.innerHTML = "❌ Please select a date";
+    return;
+  }
+
+  const dob = new Date(dobInput);
+  const today = new Date();
+
+  if (dob > today) {
+    result.innerHTML = "❌ Date of birth cannot be in the future";
+    return;
+  }
+
+  let years = today.getFullYear() - dob.getFullYear();
+  let months = today.getMonth() - dob.getMonth();
+  let days = today.getDate() - dob.getDate();
+
+  if (days < 0) {
+    months--;
+    const lastMonth = new Date(today.getFullYear(), today.getMonth(), 0);
+    days += lastMonth.getDate();
+  }
+
+  if (months < 0) {
+    years--;
+    months += 12;
+  }
+
+  result.innerHTML = `
+    ✅ <strong>Your Age:</strong><br>
+    ${years} Years, ${months} Months, ${days} Days
+  `;
+}
+body {
+  font-family: Arial, sans-serif;
+  padding: 20px;
+  max-width: 500px;
+  margin: auto;
+}
+
+input, button {
+  padding: 10px;
+  margin-top: 5px;
+}
+
+button {
+  cursor: pointer;
+}
+
+#result {
+  margin-top: 20px;
+  font-size: 18px;
+}
+
+function resetForm() {
+  document.getElementById("dob").value = "";
+  document.getElementById("result").innerHTML = "";
+}
+
+
